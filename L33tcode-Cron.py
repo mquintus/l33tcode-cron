@@ -50,32 +50,32 @@ def main(configFileHandle):
     subprocess.run(["git", "clone", config['repo'], "tmprepo"], check=True)
     useLeetcodeInfoToUpdateFiles = UseLeetcodeInfoToUpdateFiles()
     if 'append' in config:
-        for adjust in config['append']:
-            logging.warning(adjust)
-            useLeetcodeInfoToUpdateFiles.adjustFile(
+        for append in config['append']:
+            logging.warning(append)
+            useLeetcodeInfoToUpdateFiles.appendFile(
                 data,
-                "tmprepo/" + adjust['file'],
-                adjust['match'],
-                adjust['append'],
+                "tmprepo/" + append['file'],
+                append['match'],
+                append['append'],
             )
     if 'prepend' in config:
-        for adjust in config['prepend']:
-            logging.warning(adjust)
-            useLeetcodeInfoToUpdateFiles.adjustFile(
+        for prepend in config['prepend']:
+            logging.warning(prepend)
+            useLeetcodeInfoToUpdateFiles.prependFile(
                 data,
-                "tmprepo/" + adjust['file'],
-                adjust['match'],
-                adjust['prepend'],
+                "tmprepo/" + prepend['file'],
+                prepend['match'],
+                prepend['prepend'],
             )
     if 'replace' in config:
-        for adjust in config['replace']:
-            logging.warning(adjust)
-            useLeetcodeInfoToUpdateFiles.adjustFile(
+        for replace in config['replace']:
+            logging.warning(replace)
+            useLeetcodeInfoToUpdateFiles.replaceFile(
                 data,
-                "tmprepo/" + adjust['file'],
-                adjust['matchbegin'],
-                adjust['matchend'],
-                adjust['replace'],
+                "tmprepo/" + replace['file'],
+                replace['matchbegin'],
+                replace['matchend'],
+                replace['replace'],
             )
     if 'create' in config:
         for create in config['create']:
