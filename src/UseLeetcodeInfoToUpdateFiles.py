@@ -16,8 +16,14 @@ class UseLeetcodeInfoToUpdateFiles:
             "myTitleSlug": data['question']['frontendQuestionId'] + '_' + data['question']['title'].replace(' ', '_'),
             "difficulty": data['question']['difficulty'],
             "content": data['content'],
+            "topictag": data['question']['topicTags'][0]['name'],
             "testcases": '',
         }
+        # Example topic tags are ['Dynamic Programming', 'Bit Manipulation', 'Breadth-First Search', 'Graph', 'Bitmask']
+        # Some are more interesting than others. We'll prioritize "Graph" is present. Otherwise the first in the list.
+        for topictag in data['question']['topicTags']:
+            if topictag['name'] == 'Graph':
+                replacements['topictag'] = 'Graph'
         for key, value in replacements.items():
             content = content.replace('{' + key + '}', value)
         return content.replace('\\n', '\n')
