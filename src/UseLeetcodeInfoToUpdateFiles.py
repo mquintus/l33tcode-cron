@@ -23,7 +23,7 @@ class UseLeetcodeInfoToUpdateFiles:
         return content.replace('\\n', '\n')
 
 
-    def adjustFile(
+    def appendFile(
             self,
             data: dict,
             file: str,
@@ -49,6 +49,60 @@ class UseLeetcodeInfoToUpdateFiles:
         f.write(readmeFileContent)
         f.close()
 
+    def prependFile(
+            self,
+            data: dict,
+            file: str,
+            match: str,
+            prepend: str,
+    ):
+        prepend = self.enhance(data, prepend)
+        file = self.enhance(data, file)
+        match = self.enhance(data, match)
+        f = open(file, "r+")
+        readmeFileContent = f.read()
+        if match + prepend in readmeFileContent:
+            print("Already in file:", prepend + match)
+            return
+        if match not in readmeFileContent:
+            print("No match:", match)
+            print("Could not add:", prepend)
+            raise(Exception("Could not add: " + prepend))
+
+        readmeFileContent = readmeFileContent.replace(match, prepend + match)
+        f.truncate(0)
+        f.seek(0)
+        f.write(readmeFileContent)
+        f.close()
+
+    def replaceFile(
+            self,
+            data: dict,
+            file: str,
+            matchbefore: str,
+            matchafter: str,
+            replace: str,
+    ):
+        replace = self.enhance(data, replace)
+        file = self.enhance(data, file)
+        matchbefore = self.enhance(data, matchbefore)
+        matchafter = self.enhance(data, matchafter)
+        f = open(file, "r+")
+        readmeFileContent = f.read()
+        if matchbefore + replace + matchafter in readmeFileContent:
+            print("Already in file:", matchbefore + replace + matchafter)
+            return
+        if matchbefore not in readmeFileContent:
+            raise(Exception("No match:" + matchbefore))
+        if matchafter not in readmeFileContent:
+            raise(Exception("No match:" + matchafter))
+        p0 = readmeFileContent.find(matchbefore) + len(matchbefore)
+        p1 = readmeFileContent.find(matchafter)
+        readmeFileContent = readmeFileContent[:p0] + replace + readmeFileContent[p1:]
+        f.truncate(0)
+        f.seek(0)
+        f.write(readmeFileContent)
+        f.close()
 
     def createFile(
             self,

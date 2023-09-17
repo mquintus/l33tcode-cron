@@ -93,11 +93,11 @@ def main(configFileHandle):
 
 
 # l33tcode-reload
-configFileHandle = open("l33tcode-reload.config")
-main(configFileHandle)
-configFileHandle.close()
-
-# l33tcode-testcase-generator
-#configFileHandle = open("l33tcode-testcase-generator.config")
+#configFileHandle = open("l33tcode-reload.config")
 #main(configFileHandle)
 #configFileHandle.close()
+
+# l33tcode-testcase-generator
+configFileHandle = open("l33tcode-testcase-generator.config")
+main(configFileHandle)
+configFileHandle.close()
