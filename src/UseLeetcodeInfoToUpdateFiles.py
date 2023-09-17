@@ -40,7 +40,7 @@ class UseLeetcodeInfoToUpdateFiles:
         if match not in readmeFileContent:
             print("No match:", match)
             print("Could not add:", append)
-            return
+            raise(Exception("Could not add: " + append))
 
         readmeFileContent = readmeFileContent.replace(match, match + append)
         f.truncate(0)

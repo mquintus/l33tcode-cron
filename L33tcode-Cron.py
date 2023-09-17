@@ -51,8 +51,8 @@ def main(configFileHandle):
         subprocess.run(["rm", "-rf", "tmprepo"], check=True)
     subprocess.run(["git", "clone", config['repo'], "tmprepo"], check=True)
     useLeetcodeInfoToUpdateFiles = UseLeetcodeInfoToUpdateFiles()
-    if 'adjust' in config:
-        for adjust in config['adjust']:
+    if 'append' in config:
+        for adjust in config['append']:
             logging.warning(adjust)
             useLeetcodeInfoToUpdateFiles.adjustFile(
                 data,
