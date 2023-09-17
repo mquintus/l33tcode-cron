@@ -58,6 +58,25 @@ def main(configFileHandle):
                 adjust['match'],
                 adjust['append'],
             )
+    if 'prepend' in config:
+        for adjust in config['prepend']:
+            logging.warning(adjust)
+            useLeetcodeInfoToUpdateFiles.adjustFile(
+                data,
+                "tmprepo/" + adjust['file'],
+                adjust['match'],
+                adjust['prepend'],
+            )
+    if 'replace' in config:
+        for adjust in config['replace']:
+            logging.warning(adjust)
+            useLeetcodeInfoToUpdateFiles.adjustFile(
+                data,
+                "tmprepo/" + adjust['file'],
+                adjust['matchbegin'],
+                adjust['matchend'],
+                adjust['replace'],
+            )
     if 'create' in config:
         for create in config['create']:
             logging.warning(create)

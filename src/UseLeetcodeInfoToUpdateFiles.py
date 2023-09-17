@@ -16,6 +16,7 @@ class UseLeetcodeInfoToUpdateFiles:
             "myTitleSlug": data['question']['frontendQuestionId'] + '_' + data['question']['title'].replace(' ', '_'),
             "difficulty": data['question']['difficulty'],
             "content": data['content'],
+            "testcases": '',
         }
         for key, value in replacements.items():
             content = content.replace('{' + key + '}', value)
