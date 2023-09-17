@@ -14,7 +14,6 @@
 # - Creating Pull Requests
 
 import yaml
-import sys
 import os
 import subprocess
 import re
@@ -23,6 +22,17 @@ import logging
 from src.DailyChallengeLib import DailyChallengeLib
 from src.UseLeetcodeInfoToUpdateFiles import UseLeetcodeInfoToUpdateFiles
 
+def check_git_repo(repo):
+    # Regex to check valid Git Repository
+    regex = "((http|git|ssh|http(s)|file|\/?)"\
+    "|(git@[\w\.]+))(:(\/\/)?)([\w\.@\:/\-~]+)(\.git)(\/)?"
+    p = re.compile(regex)
+    # If the string is empty
+    # return False
+    if (repo is None or repo == None or len(repo) == 0):
+        return False
+    return re.search(p, repo)
+
 def main(configFileHandle):
 
     dailyChallengeLib = DailyChallengeLib()
@@ -30,22 +40,10 @@ def main(configFileHandle):
 
     config = yaml.safe_load(configFileHandle)
     if not 'repo' in config:
-        sys.exit()
-
-    def check_git_repo(repo):
-        # Regex to check valid  GIT Repository
-        regex = "((http|git|ssh|http(s)|file|\/?)"\
-        "|(git@[\w\.]+))(:(\/\/)?)([\w\.@\:/\-~]+)(\.git)(\/)?"
-        p = re.compile(regex)
-        # If the string is empty
-        # return False
-        if (repo is None or repo == None or len(repo) == 0):
-            return False
-        return re.search(p, repo)
+        raise(Exception("Config must provide 'repo' value to check out before continuing."))
 
     if not check_git_repo(config['repo']):
-        print("Invalid git repo " + config['repo'])
-        sys.exit()
+        raise(Exception("Invalid git repo " + config['repo']))
 
     if os.path.exists("tmprepo"):
         subprocess.run(["rm", "-rf", "tmprepo"], check=True)
